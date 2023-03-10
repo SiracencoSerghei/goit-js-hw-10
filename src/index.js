@@ -28,7 +28,7 @@ let countriesArray = [];
 
 function handleCountries(countries) {
   if (countries.length < 2) {
-    createCountryInfoCard(countries);
+    createCountryInfoCard(countries[0]);
     Notify.success('Here is your Info Card');
   } else if (countries.length >= 2 && countries.length <= 10) {
     // console.log(countries);
@@ -40,20 +40,6 @@ function handleCountries(countries) {
     clearResults();
     handleInfo();
   }
-}
-function handleError() {
-  clearResults();
-  Notify.failure('Oops, there is no country with that name.');
-}
-
-function handleInfo() {
-  clearResults();
-  Notify.info('Too many matches found. Please enter a more specific name.');
-}
-
-function clearResults() {
-  countryList.innerHTML = '';
-  countryInfo.innerHTML = '';
 }
 
 const createCountryListItem = country => {
@@ -72,22 +58,26 @@ const createCountryListItem = country => {
 
   countryList.insertAdjacentHTML('afterbegin', readyListNotation);
   countryList.insertAdjacentHTML('beforeend', readyList);
-  countryList.addEventListener('click', e => {
-    if (e.target.nodeName !== 'BUTTON') {
+  countryList.addEventListener('click', onCountryClick);
+};
+
+ function onCountryClick (e) {
+    if (!e.target.closest('button')) {
       return;
     }
-    // const countryName = e.target.classList.value;
+    const countryName = e.target.classList.value;
+    const index = countriesArray.findIndex(c => c.name.common === countryName);
+    countriesArray.filter(x => x === countriesArray[index])
+    console.log(countriesArray[index]);
     clearResults();
     // console.log(countryName);
     searchBox.value = '';
     // fetchCountries(countryName).then(handleCountries).catch(handleError);
-    createCountryInfoCard(countriesArray);
-  });
-};
 
-function createCountryInfoCard(country) {
+    createCountryInfoCard(countriesArray[index]);
+  }
+function createCountryInfoCard(c) {
   clearResults();
-  const c = country[0];
   const readyCard = `<div class="country-card">
         <div class="country-card--header">
             <img src="${
@@ -106,4 +96,19 @@ function createCountryInfoCard(country) {
             ).join(',')}</span><b></p>
     </div>`;
   countryInfo.innerHTML = readyCard;
+}
+
+function handleError() {
+  clearResults();
+  Notify.failure('Oops, there is no country with that name.');
+}
+
+function handleInfo() {
+  clearResults();
+  Notify.info('Too many matches found. Please enter a more specific name.');
+}
+
+function clearResults() {
+  countryList.innerHTML = '';
+  countryInfo.innerHTML = '';
 }
