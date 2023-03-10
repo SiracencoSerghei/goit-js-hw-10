@@ -20,4 +20,16 @@ body {
 }
 li {
   list-style-type: none;
+  margin: 20px;
+}
+.country-list--item button {
+  margin: 0;
+  padding: 5px;
+}
+.info-list {
+  color: #ff0000;
+  font-weight: 500;
+  margin: 50px;
+  background-color: #f9f9f9;
+  padding: 10px;
 }

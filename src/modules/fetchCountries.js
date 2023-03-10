@@ -8,7 +8,9 @@ function fetchCountries(name)  {
     if (response.ok) {
       return response.json();
     }
+    Notify.failure('Oops, there is no country with that name.');
     throw new Error(response.statusText);
+    
   });
 }
 export { fetchCountries };
