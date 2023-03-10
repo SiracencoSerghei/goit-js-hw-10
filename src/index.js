@@ -66,15 +66,15 @@ const createCountryListItem = country => {
       return;
     }
     const countryName = e.target.classList.value;
-    const index = countriesArray.findIndex(c => c.name.common === countryName);
-    countriesArray.filter(x => x === countriesArray[index])
-    console.log(countriesArray[index]);
+    // const index = countriesArray.findIndex(c => c.name.common === countryName);
+    // countriesArray.filter(x => x === countriesArray[index])
+    // console.log(countriesArray);
     clearResults();
-    // console.log(countryName);
+    console.log(countryName);
     searchBox.value = '';
-    // fetchCountries(countryName).then(handleCountries).catch(handleError);
+    fetchCountries(countryName).then(handleCountries).catch(handleError);
 
-    createCountryInfoCard(countriesArray[index]);
+    // createCountryInfoCard(countriesArray[index]);
   }
 function createCountryInfoCard(c) {
   clearResults();
